@@ -3,42 +3,60 @@
 ## Phase 0: Language Specification
 
 
-Programming language name:
+Programming language name: Simple
 
-Language file extension:
+Language file extension: test.simpl
 
-Compiler name:
+Compiler name: Simple-Comp 
 
 
 |__Language Feature__ | __Code Example__ |
 | ------------------- | ---------------- |
-|Integer scalar variables| TO DO: fill table|
-|One-dimensional array of integers|
-|Assignment statements|
-|Arithmetic operators|
-|Relational operators|
-|While loops|
-|If-then-else statements|
-|Read statements|
-|Write statements|
-|Comments|
-|Functions|
+|Integer scalar variables| int num1 int num2|
+|One-dimensional array of integers|int[] array|
+|Assignment statements|num1 = 5, num2 = num1|
+|Arithmetic operators|num1 = 1 + 2, num1 = 1 - num2, num1 = 1 * 2, num1 = 1 / 2|
+|Relational operators|y == 5, y > 5, y < 5, y >= 5, y <= 5, y != 5|
+|While loops|while expr:(indent) statement(s)
+|If-then-else statements|if expr: (indent) statement(s), if expr: (indent) statement(s) else :(indent) statement(s)
+|Read statements|get|
+|Write statements|out|
+|Comments|##|
+|Functions|define calculate (int num1, int num2): (indent) statement(s) return num1+num2
 
 
 ### Definitions:
 
-Comments:
+Comments:## to calculate the sum of two integers
 
 Valid identifiers:
+Must start with a letter. Can only contain numbers and letters.
 
-Case sensitive: Yes/No?
+Case sensitive: Yes
 
-Whitespaces:
+Whitespaces:Indent code consistently. Indentation specifies code blocks. 
 
 ### Token Table:
 
 |__Symbol in Language__ | __Token Name__ |
 |---------------------- | -------------- |
-|TO DO: Fill table      | INTEGER        |
-|                       |                |
-|                       |                |
+|int                    | INTEGER        |
+|int[]                  | ARRAY          |
+|=                      | EQUALS         |
+|+                      | PLUS           |
+|-                      | MINUS          |
+| *                     | TIMES          |
+|/                      | DIVIDES        |
+|##                     | COMMENTS       |
+|get                    | GETINPUT       |
+|out                    | GETOUTPUT      |
+|==                     | EQUALITY       |
+|>=                     | GREATEREQ      |
+|<=                     | LESSEQ         |
+|!=                     | NOTEQUALITY    |
+|>                      | GREATER        |
+|<                      | LESS           |
+|while                  | WHILE          |
+|if                     | IF             |
+|else                   | ELSE           |
+
