@@ -22,7 +22,7 @@ Compiler name: Simple-Comp
 |Read statements|get|
 |Write statements|out|
 |Comments|##|
-|Functions|define calculate (int num1, int num2): (indent) statement(s) return num1+num2
+|Functions|define calculate (int num1, int num2): statement(s) return num1+num2;
 
 
 ### Definitions:
@@ -59,4 +59,9 @@ Whitespaces:Indent code consistently. Indentation specifies code blocks.
 |while                  | WHILE          |
 |if                     | IF             |
 |else                   | ELSE           |
-
+|define                 | FUNCTION       |
+|(                      | BEGIN_PARAMS   |
+|)                      | END_PARAMS     |
+|:                      | BEGIN_BODY     |
+|;                      | END_BODY       |
+|return                 | RETURN         |
