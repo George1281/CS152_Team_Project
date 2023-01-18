@@ -59,4 +59,9 @@ Whitespaces:Indent code consistently. Indentation specifies code blocks.
 |while                  | WHILE          |
 |if                     | IF             |
 |else                   | ELSE           |
-
+|function               | FUNCTION       |
+|beginparamas           | BEGIN_PARAMS   |
+|endparams              | END_PARAMS     |
+|beginbody              | BEGIN_BODY     |
+|endbody                | END_BODY       |
+|return                 | RETURN         |
