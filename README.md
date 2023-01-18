@@ -27,8 +27,10 @@ Compiler name: Simple-Comp
 |Read statements|get|\
 |Write statements|out|\
 |Comments|##|\
-|Functions|define calculate (int num1, int num2):|
-||	 return num1+num2;|
+|Functions|```\
+|         |define calculate (int num1, int num2):\
+|         |	return num1+num2;\
+|         |```|
 
 
 ### Definitions:
