@@ -60,6 +60,8 @@ Whitespaces:Indent code consistently. Indentation specifies code blocks.
 |if                     | IF             |
 |else                   | ELSE           |
 |define                 | FUNCTION       |
+|read                   | READ           |
+|print                  | PRINT          |
 |(                      | BEGIN_PARAMS   |
 |)                      | END_PARAMS     |
 |:                      | BEGIN_BODY     |
