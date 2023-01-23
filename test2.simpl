@@ -1,0 +1,5 @@
+## a program with lex error
+int a ;
+int b ;
+# wrong id
+int _a12;
