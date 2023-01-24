@@ -56,4 +56,3 @@ void main(int argc, char **argv) {
       fclose(yyin);
    }
 }
-

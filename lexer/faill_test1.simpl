@@ -1,0 +1,9 @@
+define number(int num)
+
+[
+	int num = 3;
+	if (num < 2):
+		[out num]
+ 	else num > 2
+ 		[out num + 1]
+]
