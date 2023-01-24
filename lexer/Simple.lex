@@ -3,12 +3,15 @@
 %}
 
 DIGIT [0-9]
+ID [a-zA-Z][a-zA-Z0-9]*
 
 	int numInts = 0, numOps = 0, numParen = 0, numEq = 0;
-	int currLine, currPos;
+ 	int currLine, currPos;
 
 %%
 {DIGIT}+ {printf("%s\n", yytext);++numInts;}
+" "|"\t" {}
+"\n" {++currLine;currPos = 0;}
 "+" {printf("PLUS\n");++numOps;}
 "-" {printf("MINUS\n");++numOps;}
 "*" {printf("TIMES\n");++numOps;}
@@ -18,7 +21,7 @@ DIGIT [0-9]
 "=" {printf("EQUALS\n");++numEq;}
 "int" {printf("INTEGER\n");}
 "int[]" {printf("ARRAY\n");}
-"##" {printf("COMMENTS\n");}
+"##"[^\n]*\n  {printf("COMMENTS\n");++currLine;currPos = 0;}
 "get" {printf("GETINPUT\n");}
 "out" {printf("GETOUTPUT\n");}
 "==" {printf("EQUALITY\n");}
@@ -30,10 +33,12 @@ DIGIT [0-9]
 "while" {printf("WHILE\n");}
 "if" {printf("IF\n");}
 "else" {printf("ELSE\n");}
-"define" {printf("PRINT\n");}
-":" {printf("BEGIN_BODY\n");}
-";" {printf("END_BODY\n");}
+"define" {printf("FUNCTION\n");}
+":" {printf("END_EXPRESSION\n");}
+"[" {printf("BEGIN_BODY\n");}
+"]" {printf("END_BODY\n");}
 "return" {printf("RETURN\n");}
+{ID} {printf("ID: %s\n", yytext);}
 . {YY_FATAL_ERROR("Error: Character not recognized\n");}
 %%
 
@@ -46,6 +51,8 @@ void main(int argc, char **argv) {
   // printf("Number of operators: %d\n", numOps);
   // printf("Number of parantheses: %d\n", numParen);
   // printf("Number of equal signs: %d\n", numEq);
+   printf("Number of lines: %d\n", currLine);
    if(argc > 0){
       fclose(yyin);
    }
+}
