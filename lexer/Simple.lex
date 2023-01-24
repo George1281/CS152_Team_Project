@@ -6,40 +6,42 @@ DIGIT [0-9]
 ID [a-zA-Z][a-zA-Z0-9]*
 
 	int numInts = 0, numOps = 0, numParen = 0, numEq = 0;
- 	int currLine, currPos;
+ 	int currLine= 1; 
+	int currPos= 1;
 
 %%
-{DIGIT}+ {printf("%s\n", yytext);++numInts;}
-" "|"\t" {}
-"\n" {++currLine;currPos = 0;}
-"+" {printf("PLUS\n");++numOps;}
-"-" {printf("MINUS\n");++numOps;}
-"*" {printf("TIMES\n");++numOps;}
-"/" {printf("DIVIDES\n");++numOps;}
-"(" {printf("BEGIN_PARAMS\n");++numParen;}
-")" {printf("END_PARAMS\n");++numParen;}
-"=" {printf("EQUALS\n");++numEq;}
-"int" {printf("INTEGER\n");}
-"int[]" {printf("ARRAY\n");}
-"##"[^\n]*\n  {printf("COMMENTS\n");++currLine;currPos = 0;}
-"get" {printf("GETINPUT\n");}
-"out" {printf("GETOUTPUT\n");}
-"==" {printf("EQUALITY\n");}
-">=" {printf("GREATEREQ\n");}
-"<=" {printf("LESSEQ\n");}
-"!=" {printf("NOTEQUALITY\n");}
-">" {printf("GREATER\n");}
-"<" {printf("LESS\n");}
-"while" {printf("WHILE\n");}
-"if" {printf("IF\n");}
-"else" {printf("ELSE\n");}
-"define" {printf("FUNCTION\n");}
-":" {printf("END_EXPRESSION\n");}
-"[" {printf("BEGIN_BODY\n");}
-"]" {printf("END_BODY\n");}
-"return" {printf("RETURN\n");}
-{ID} {printf("ID: %s\n", yytext);}
-. {printf("Error: Character not recognized in line %d\n", currLine); YY_FATAL_ERROR("Exiting.\n");}
+{DIGIT}+ {printf("%s\n", yytext);++numInts; currPos += yyleng;}
+" " {currPos += yyleng;}
+"\t" {currPos += 8;}
+"\n" {++currLine;currPos = 1;}
+"+" {printf("PLUS\n");++numOps; currPos += yyleng;}
+"-" {printf("MINUS\n");++numOps; currPos += yyleng;}
+"*" {printf("TIMES\n");++numOps;currPos += yyleng;}
+"/" {printf("DIVIDES\n");++numOps; currPos += yyleng;}
+"(" {printf("BEGIN_PARAMS\n");++numParen; currPos += yyleng;}
+")" {printf("END_PARAMS\n");++numParen; currPos += yyleng;}
+"=" {printf("EQUALS\n");++numEq; currPos += yyleng;}
+"int" {printf("INTEGER\n"); currPos += yyleng;}
+"int[]" {printf("ARRAY\n"); currPos += yyleng;}
+"##"[^\n]*\n  {printf("COMMENTS\n");++currLine;currPos = 1;}
+"get" {printf("GETINPUT\n");currPos += yyleng;}
+"out" {printf("GETOUTPUT\n");currPos += yyleng;}
+"==" {printf("EQUALITY\n");currPos += yyleng;}
+">=" {printf("GREATEREQ\n");currPos += yyleng;}
+"<=" {printf("LESSEQ\n");currPos += yyleng;}
+"!=" {printf("NOTEQUALITY\n");currPos += yyleng;}
+">" {printf("GREATER\n");currPos += yyleng;}
+"<" {printf("LESS\n");currPos += yyleng;}
+"while" {printf("WHILE\n");currPos += yyleng;}
+"if" {printf("IF\n");currPos += yyleng;}
+"else" {printf("ELSE\n");currPos += yyleng;}
+"define" {printf("FUNCTION\n");currPos += yyleng;}
+":" {printf("END_EXPRESSION\n");currPos += yyleng;}
+"[" {printf("BEGIN_BODY\n");currPos += yyleng;}
+"]" {printf("END_BODY\n");currPos += yyleng;}
+"return" {printf("RETURN\n");currPos += yyleng;}
+{ID} {printf("ID: %s\n", yytext);currPos += yyleng;}
+. {printf("Error: Character not recognized in line %d column %d: unrecognized symbol \"%s\" \n" , currLine,currPos,yytext); YY_FATAL_ERROR("Exiting.\n");}
 %%
 
 void main(int argc, char **argv) {
