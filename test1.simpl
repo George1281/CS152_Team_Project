@@ -1,7 +1,0 @@
-## a program with lex error
-define sum (int a , int b):
-	return a + b /
-	
-Define Case_sensitive_error():
-
-	return 0;
