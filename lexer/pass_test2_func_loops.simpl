@@ -1,0 +1,6 @@
+define printCountDown()
+[       int count = 3
+        while count > 0:
+                [
+                out count]
+]
