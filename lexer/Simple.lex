@@ -1,89 +1,58 @@
 %{
 #include <stdio.h>
-#include "y.tab.h"
-// counts the numbers
-int numbers = 0;
-// counts the operators
-int operators = 0;
-// counts the parentheses
-int pars = 0;
-// counts the equalsigns
-int equalsigns = 0;
-// number of errors
-int errors = 0;
-// number of keywords
-int keywords = 0;
-// line number
-int line_num = 1;
 %}
 
 DIGIT [0-9]
 ID [a-zA-Z][a-zA-Z0-9]*
-PLUS [+]
-MINUS [-]
-MULT [*]
-DIV [/]
-L_PAREN[(]
-R_PAREN[)]
-L_BRAC[[]
-R_BRAC[]]
-EQUAL[=]
+
+    int numInts = 0, numOps = 0, numParen = 0, numEq = 0;
+     int currLine, currPos;
 
 %%
-{DIGIT}+ {printf("NUMBER: %s\n", yytext);numbers++;return NUM;}
-{ID} {printf("ID: %s\n", yytext);return ID;}
-"+" {printf("PLUS\n", yytext);operators++;return PLUS;}
-"-" {printf("MINUS\n", yytext);operators++;return MINUS;}
-"/" {printf("DIV\n", yytext);operators++;return DIV;}
-"*" {printf("MULT\n", yytext);operators++;return MULT;}
-"(" {printf("BEGIN_PARAMS\n", yytext);pars++;return BEIGN_PARAMS;}
-")" {printf("END_PARAMS\n", yytext);pars++;return END_PARAMS;}
-"=" {printf("EQUAL\n", yytext);equalsigns++;return EQUAL;}
-
-{DIGIT}*"."{DIGIT}+ {printf("FLOAT: %s\n", yytext);numbers++;return NUM;}
-{DIGIT}*"."{DIGIT}+[eE][+-]?{DIGIT}+ {printf("FLOAT: %s\n", yytext);numbers++;return NUM;}
-{DIGIT}+[eE][+-]?{DIGIT}+ {printf("FLOAT: %s\n", yytext);numbers++;return NUM;}
-"\n" {line_num++;}
-
-">" {printf("GREATER\n", yytext);return GREATER;}
-"<" {printf("LESS\n", yytext);return LESS;}
-">=" {printf("GREATEREQ\n", yytext);return GREATEREQ;}
-"<=" {printf("LESSEQ\n", yytext);return LESSEQ;}
-"!=" {printf("NOTEQUALITY\n", yytext);return NOTEQUALITY;}
-"==" {printf("EQUALITY\n", yytext);return EQUALITY;}
-"int" {printf("INTEGER: %s\n", yytext);keywords++;return INTEGER;}
-"get" {printf("GETINPUT\n", yytext);keywords++;return GETINPUT;}
-"out" {printf("GETOUTPUT\n", yytext);keywords++;return GETOUTPUT;}
-"while" {printf("WHILE\n", yytext);keywords++;return WHILE;}
-"if" {printf("IF\n", yytext);keywords++;return IF;}
-"else" {printf("ELSE\n", yytext);keywords++;return ELSE;}
-"define" {printf("FUNCTION\n", yytext);keywords++;return FUNCTION;}
-"return" {printf("RETURN\n", yytext);keywords++;return RETURN;}
-"\t" {printf("TAB\n", yytext);return TAB;}
-"##."  {}
-":" {printf("BEGIN_BODY\n", yytext);return BEGIN_BODY;}
-";" {printf("END_BODY\n", yytext);return END_BODY;}
-. {printf("Error-\"%s\" symbol not recognized\n", yytext);errors++;yyterminate();return NUM;}
-
-
+{DIGIT}+ {printf("%s\n", yytext);++numInts;}
+" "|"\t" {}
+"\n" {++currLine;currPos = 0;}
+"+" {printf("PLUS\n");++numOps;}
+"-" {printf("MINUS\n");++numOps;}
+"" {printf("TIMES\n");++numOps;}
+"/" {printf("DIVIDES\n");++numOps;}
+"(" {printf("BEGIN_PARAMS\n");++numParen;}
+")" {printf("END_PARAMS\n");++numParen;}
+"=" {printf("EQUALS\n");++numEq;}
+"int" {printf("INTEGER\n");}
+"int[]" {printf("ARRAY\n");}
+"##"[^\n]\n  {printf("COMMENTS\n");++currLine;currPos = 0;}
+"get" {printf("GETINPUT\n");}
+"out" {printf("GETOUTPUT\n");}
+"==" {printf("EQUALITY\n");}
+">=" {printf("GREATEREQ\n");}
+"<=" {printf("LESSEQ\n");}
+"!=" {printf("NOTEQUALITY\n");}
+">" {printf("GREATER\n");}
+"<" {printf("LESS\n");}
+"while" {printf("WHILE\n");}
+"if" {printf("IF\n");}
+"else" {printf("ELSE\n");}
+"define" {printf("FUNCTION\n");}
+":" {printf("END_EXPRESSION\n");}
+"[" {printf("BEGIN_BODY\n");}
+"]" {printf("END_BODY\n");}
+"return" {printf("RETURN\n");}
+{ID} {printf("ID: %s\n", yytext);}
+. {printf("Error: Character not recognized in line %d\n", currLine); YY_FATAL_ERROR("Exiting.\n");}
 %%
-int main(int argc, char **argv)
-{
-    // if an input file is given use the file
-    if (argc > 1)
-        yyin = fopen(argv[1], "r");
-    else
-        yyin = stdin;
-    yylex();
-    if (errors == 0)
-    {
-        printf("The summary:\n");
-        printf("%d numbers\n", numbers);
-        printf("%d operators\n", operators);
-        printf("%d parentheses\n", pars);
-        printf("%d equal signs\n", equalsigns);
-    }
+
+void main(int argc, char **argv) {
+   if(argc > 0){
+      yyin = fopen(argv[1], "r");
+   }
+   yylex();
+  // printf("Number of integers: %d\n", numInts);
+  // printf("Number of operators: %d\n", numOps);
+  // printf("Number of parantheses: %d\n", numParen);
+  // printf("Number of equal signs: %d\n", numEq);
+   printf("Number of lines: %d\n", currLine);
+   if(argc > 0){
+      fclose(yyin);
+   }
 }
-
-
-int yywrap(){return(1);}
