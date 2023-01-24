@@ -2,6 +2,6 @@ define multi(int n, int m)
 
 [
 	int n = 3
-	int m = 3
+	int m = 3 
 	sum = n & m
 ]
