@@ -1,0 +1,7 @@
+## a program with lex error
+define sum (int a , int b):
+	return a + b /
+	
+## define is identified as an ID
+Define Case_SensitiveError():
+	return 0;
