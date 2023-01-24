@@ -21,16 +21,19 @@ Compiler name: Simple-Comp
 ||num1 = 1 - num2|
 || num1 = 1 * 2|
 || num1 = 1 / 2|
-|Relational operators|y == 5, y > 5, y < 5,y >= 5,y <= 5, y != 5|\
-|While loops|while expr: statement(s)|\
-|If-then-else statements|if expr:statement(s)if expr:statement(s)else:statement(s)|\
+|Relational operators|y == 5|\
+|| y > 5|
+|| y < 5|
+||y >= 5|
+||y <= 5|
+|| y != 5|
+|While loops|while expr: [statement(s)]|\
+|If-then-else statements|if expr: [statement(s)]|\
+||if expr: [statement(s)] else: [statement(s)]|
 |Read statements|get|\
 |Write statements|out|\
 |Comments|##|\
-|Functions|```\
-|         |define calculate (int num1, int num2):\
-|         |	return num1+num2;\
-|         |```|
+|Functions|<pre><code> define calculate (int num1, int num2)</code><br><code> [return num1+num2]</code></pre>|
 
 
 ### Definitions:
@@ -42,7 +45,7 @@ Must start with a letter. Can only contain numbers and letters.
 
 Case sensitive: Yes
 
-Whitespaces:Indent code consistently. Indentation specifies code blocks. 
+Whitespaces:White space does not matter. White space is ignored.
 
 ### Token Table:
 
@@ -70,8 +73,7 @@ Whitespaces:Indent code consistently. Indentation specifies code blocks.
 |define                 | FUNCTION       |
 |(                      | BEGIN_PARAMS   |
 |)                      | END_PARAMS     |
-|:                      | BEGIN_BODY     |
-|;                      | END_BODY       |
+|:                      | END_EXPRESSION |
+|[                      | BEGIN_BODY     |
+|]                      | END_BODY       |
 |return                 | RETURN         |
-|\t                     | TAB            |
-|\n                     | NEWLINE        |
